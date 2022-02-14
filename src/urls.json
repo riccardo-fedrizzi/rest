@@ -1,0 +1,8 @@
+{
+    "base": "https://coronavirus-tracker-api.herokuapp.com/",
+    "v2": {
+        "base": "https://coronavirus-tracker-api.herokuapp.com/v2",
+        "locations": "https://coronavirus-tracker-api.herokuapp.com/v2/locations",
+        "latest": "https://coronavirus-tracker-api.herokuapp.com/v2/latest"
+    }
+}
