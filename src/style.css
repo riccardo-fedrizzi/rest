@@ -1,0 +1,97 @@
+*, body, html {
+    font-family: 'Open Sans', sans-serif;
+    border: 0px;
+    padding: 0px;
+    font-weight: normal;
+}
+
+header {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.main-container {
+    padding-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    border: none;
+    padding: 10px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    margin: 0px;
+    background-color: rgb(189, 190, 197);
+}
+
+p {
+    margin: 0px;
+}
+
+.latest {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    margin: 0px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#container-latest {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    font-weight:normal;
+}
+
+#container-latest-country {
+    padding-top: 20px;
+}
+
+th {
+    padding-right: 20px;
+}
+
+.moreBtn {
+    padding: 7px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+#country-name {
+    padding-top: 13px;
+    text-align: center;
+    font-size: 40px;
+}
+
+#back-btn {
+    float: left;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 10px;
+}
+
+.chart {
+    max-width: 800px;
+    max-height: 800px;
+    margin-top: 40px;
+}
+
+#chart-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
