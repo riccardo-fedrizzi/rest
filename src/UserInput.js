@@ -9,6 +9,7 @@ function UserInput() {
         let { data } = props;
         return (
             <div className="container-general">
+                <input type="button" value="Home" id="homeBtn" onClick={Home}></input>
                 <div id="container-latest">
                     <div className="latest" id="container-latest-confirmed">
                         <p>Confirmed</p>
@@ -48,12 +49,32 @@ function UserInput() {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div >
         );
     }
 
+    function Home(e) {
+        e?.preventDefault();
+        ReactDOM.render(<div className="main-container">
+
+            <input onClick={fetchAllData} className="button" type="button" value="View last report"></input>
+            <div className="advanced-search">
+                <div>
+                    <input type="button" id="advancedSearchbtn" onClick={advancedSearch} value="Advanced Search"></input>
+                </div>
+                <div id="advancedSearch">
+
+                </div>
+
+            </div>
+
+
+            <div id="main-data"></div>
+        </div>, document.getElementById('root'));
+    }
+
     function DisplaySpecificCoutryData(props) {
-        let data = props.data.location;
+        let data = props.data.location || props.data.locations[0];
         return (
             <div>
                 <input type="button" onClick={fetchAllData} id="back-btn" value="Back"></input>
@@ -73,29 +94,36 @@ function UserInput() {
                     </div>
                 </div>
                 <div id="chart-container">
-                        <canvas className="chart" id="confirmed-chart" width="600" height="600"></canvas>
-                        <canvas className="chart"id="recovered-chart" width="600" height="600"></canvas>
-                        <canvas className="chart" id="deaths-chart" width="600" height="600"></canvas>
+                    <canvas className="chart" id="confirmed-chart" width="600" height="600"></canvas>
+                    <canvas className="chart" id="recovered-chart" width="600" height="600"></canvas>
+                    <canvas className="chart" id="deaths-chart" width="600" height="600"></canvas>
                 </div>
             </div>
         );
     }
 
     async function fetchAllData(e) {
-        e.preventDefault();
         let data = await fetch(urls.v2.locations).then(res => res.json());
         ReactDOM.render(<DisplayData data={data} />, document.getElementById('root'));
     }
 
-    async function fetchSpecificCountry(e) {
-        e.preventDefault();
+    async function fetchSpecificCountry(e, countryname) {
+
 
         let charts = ['confirmed-chart', 'recovered-chart', 'deaths-chart'];
         let chartsLabel = ['Confirmed', 'Recovered', 'Deaths'];
-        let url = `${urls.v2.locations}${e.target.id}`;
+        let url;
+
+        if (e?.target?.id) url = `${urls.v2.locations}${e.target.id}`;
+        if (countryname) url = `${urls.v2.locations}?country_code=${countryname}`;
         let data = await fetch(url).then(res => res.json());
+        if (!data) {
+            ReactDOM.render(<div><p>No country code found</p></div>, document.getElementById('main-data'));
+            return;
+        }
         await ReactDOM.render(<DisplaySpecificCoutryData data={data} />, document.getElementById('root'));
-        data = data.location.timelines;
+        data = data?.location?.timelines;
+        if (!data) return;
         let dataKeys = Object.keys(data);
         dataKeys.forEach((property, i) => {
             let timeline = data[property].timeline;
@@ -122,22 +150,38 @@ function UserInput() {
 
     }
 
+    function displayAdvancedCountry(e) {
+        let country = document.getElementById('advanced-search-name').value;
+        if (!country) {
+            ReactDOM.render(<div><p>No country code found</p></div>, document.getElementById('main-data'));
+            return;
+        }
+        fetchSpecificCountry(null, country)
+    }
+
+    let display = true;
+    const advancedSearch = async e => {
+        ReactDOM.render(<div></div>, document.getElementById('advancedSearch'))
+        if (display) {
+            ReactDOM.render(<div><input type="text" id="advanced-search-name" placeholder="Country code"></input><input type="button" id="advancedSearchFindbtn" onClick={displayAdvancedCountry} value="Search"></input></div>, document.getElementById('advancedSearch'))
+        }
+        display = !display;
+    }
 
     return (
 
         <div className="main-container">
+
             <input onClick={fetchAllData} className="button" type="button" value="View last report"></input>
-            { /*
-            <div>
+            <div className="advanced-search">
                 <div>
-                    <input type="button" value="Advanced Search"></input>
+                    <input type="button" id="advancedSearchbtn" onClick={advancedSearch} value="Advanced Search"></input>
                 </div>
-                <div>
-                    <input type="text" placeholder="Country name"></input>
-                    <input type="button" value="Search"></input>
+                <div id="advancedSearch">
+
                 </div>
+
             </div>
-             */}
 
 
             <div id="main-data"></div>

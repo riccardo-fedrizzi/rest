@@ -14,6 +14,7 @@ header {
     padding-top: 30px;
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -94,4 +95,24 @@ th {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+}
+
+#advancedSearchbtn, #advancedSearchFindbtn, #homeBtn {
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+ 
+.advanced-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#advanced-search-name:focus {
+    outline: none !important;
+    border: none !important;
+    border-bottom: 1px solid #000 !important;
+    padding: 10px;
 }
