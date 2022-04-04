@@ -110,8 +110,8 @@ function UserInput() {
     async function fetchSpecificCountry(e, countryname) {
 
 
-        let charts = ['confirmed-chart', 'recovered-chart', 'deaths-chart'];
-        let chartsLabel = ['Confirmed', 'Recovered', 'Deaths'];
+        let charts = ['confirmed-chart', 'deaths-chart',  'recovered-chart'];
+        let chartsLabel = ['Confirmed', 'Deaths',  'Recovered'];
         let url;
 
         if (e?.target?.id) url = `${urls.v2.locations}${e.target.id}`;
@@ -126,11 +126,14 @@ function UserInput() {
         if (!data) return;
         let dataKeys = Object.keys(data);
         dataKeys.forEach((property, i) => {
+            console.log(data);
+            console.log(chartsLabel[i]);
+            
             let timeline = data[property].timeline;
             let keys = Object.keys(timeline);
             let datas = Object.values(timeline);
 
-            const confirmedChartData = {
+            const chartConfig = {
                 type: 'line',
                 data: {
                     labels: keys,
@@ -144,7 +147,7 @@ function UserInput() {
                 }
             };
 
-            new Chart(document.getElementById(charts[i]), confirmedChartData);
+            new Chart(document.getElementById(charts[i]), chartConfig);
 
         });
 
