@@ -126,8 +126,6 @@ function UserInput() {
         if (!data) return;
         let dataKeys = Object.keys(data);
         dataKeys.forEach((property, i) => {
-            console.log(data);
-            console.log(chartsLabel[i]);
             
             let timeline = data[property].timeline;
             let keys = Object.keys(timeline);
